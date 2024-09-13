@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าเว็บหลัก</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>ยินดีต้อนรับเข้าสู่หน้าเว็บหลัก!</h1>
+
+    <script>
+        // ตรวจสอบว่าผู้ใช้ได้ล็อกอินแล้วหรือยัง
+        window.onload = function() {
+            if (sessionStorage.getItem('loggedIn') !== 'true') {
+                // ถ้ายังไม่ได้ล็อกอิน ให้เปลี่ยนไปที่หน้า login.html
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
