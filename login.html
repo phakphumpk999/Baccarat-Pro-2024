@@ -114,38 +114,31 @@
     <script>
         // เก็บข้อมูลอีเมลและรหัสผ่านใน array
         const accounts = [
-            { email: "pakpoompk9992@gmail.com", password: "Pk0816998761" }, // บัญชีผู้ใช้เดิม
-            { email: "newmember1@example.com", password: "password123" }, // เพิ่มบัญชีผู้ใช้ใหม่
-            { email: "newmember2@example.com", password: "newpass456" }  // เพิ่มบัญชีผู้ใช้ใหม่
+            { email: "pakpoompk9992@gmail.com", password: "Pk0816998761" },
         ];
 
         // ฟังก์ชันตรวจสอบการล็อกอิน
         function login(event) {
-            event.preventDefault(); // หยุดการรีเฟรชหน้าเว็บเมื่อกด submit
+            event.preventDefault();  // หยุดการรีเฟรชหน้าเว็บเมื่อกด submit
+            console.log("ฟังก์ชัน login ถูกเรียกใช้งาน");
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // ตรวจสอบข้อมูลผู้ใช้
+            console.log('อีเมล:', email);
+            console.log('รหัสผ่าน:', password);
+
             const isValid = accounts.some(account => account.email === email && account.password === password);
 
             if (isValid) {
-                // ถ้าข้อมูลถูกต้อง ให้เก็บสถานะล็อกอินใน sessionStorage
+                console.log('เข้าสู่ระบบสำเร็จ');
                 sessionStorage.setItem('loggedIn', 'true');
-                // เปลี่ยนหน้าไปที่ index.html
                 window.location.href = 'index.html';
             } else {
+                console.log('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
                 alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
             }
         }
-
-        // ตรวจสอบสถานะการล็อกอินเมื่อเปิดหน้าเว็บ
-        window.onload = function() {
-            if (sessionStorage.getItem('loggedIn') === 'true') {
-                // ถ้าผู้ใช้ล็อกอินแล้วให้เปลี่ยนหน้าไปที่ index.html
-                window.location.href = 'index.html';
-            }
-        };
     </script>
 
 </body>
