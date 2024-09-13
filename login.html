@@ -107,7 +107,7 @@
         </div>
 
         <div class="btn">
-            <button class="button1" type="submit" onclick="login(event)">ลงชื่อเข้าใช้</button>
+            <button class="button1" id="loginButton">ลงชื่อเข้าใช้</button>
         </div>
     </div>
 
@@ -139,7 +139,13 @@
                 alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
             }
         }
+
+        // เชื่อมโยงปุ่มล็อกอินกับฟังก์ชัน login()
+        document.getElementById("loginButton").addEventListener("click", function(event) {
+            login(event);
+        });
     </script>
 
 </body>
 </html>
+
