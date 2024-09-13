@@ -26,11 +26,12 @@
     <script>
         // ตรวจสอบว่าผู้ใช้ได้ล็อกอินแล้วหรือยัง
         window.onload = function() {
+            // ตรวจสอบว่า sessionStorage มีค่า loggedIn ถูกตั้งค่าเป็น true หรือไม่
             if (sessionStorage.getItem('loggedIn') !== 'true') {
                 // ถ้ายังไม่ได้ล็อกอิน ให้เปลี่ยนไปที่หน้า login.html
                 window.location.href = 'login.html';
             }
-        }
+        };
     </script>
 </body>
 </html>
