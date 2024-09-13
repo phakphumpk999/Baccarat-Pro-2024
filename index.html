@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baccarat Killer Algorithm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: red;
+            text-align: center;
+            padding: 10px;
+        }
+        .result-section {
+            text-align: center;
+            padding: 20px;
+        }
+        .circle {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 30px;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+            margin: 10px;
+        }
+        .circle.P {
+            background-color: blue;
+        }
+        .circle.B {
+            background-color: red;
+        }
+        .timestamp {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        .algorithm-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .status-box {
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            color: white;
+            position: relative;
+            width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .status-box .left-icons {
+            display: flex;
+            position: absolute;
+            left: 10px;
+        }
+        .status-box .left-icons span {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-box .left-icons .red {
+            background-color: #ff605c;
+        }
+        .status-box .left-icons .yellow {
+            background-color: #ffbd44;
+        }
+        .status-box .left-icons .green {
+            background-color: #00ca4e;
+        }
+        .status-box .title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+        }
+        .prediction {
+            background-color: #333;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .log-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #222;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .log-entry .result-text {
+            color: white;
+        }
+        .status {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+        .status.correct {
+            background-color: green;
+        }
+        .status.wrong {
+            background-color: red;
+        }
+        .status.correct:before {
+            content: "✔";
+            margin-right: 5px;
+        }
+        .status.wrong:before {
+            content: "✖";
+            margin-right: 5px;
+        }
+
+        /* ปุ่มที่คุณให้มา */
+        .button {
+          position: relative;
+          width: 120px;
+          height: 40px;
+          background-color: #000;
+          display: flex;
+          align-items: center;
+          color: white;
+          flex-direction: column;
+          justify-content: center;
+          border: none;
+          padding: 12px;
+          gap: 12px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+
+        .button::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          left: -4px;
+          top: -1px;
+          margin: auto;
+          width: 128px;
+          height: 48px;
+          border-radius: 10px;
+          background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100% );
+          z-index: -10;
+          pointer-events: none;
+          transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .button::after {
+          content: "";
+          z-index: -1;
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100% );
+          transform: translate3d(0, 0, 0) scale(0.95);
+          filter: blur(20px);
+        }
+
+        .button:hover::after {
+          filter: blur(30px);
+        }
+
+        .button:hover::before {
+          transform: rotate(-180deg);
+        }
+
+        .button:active::before {
+          scale: 0.7;
+        }
+
+        /* Centering the button */
+        .button-container {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+
+        /* Radar Loader CSS */
+        .loader {
+          position: relative;
+          width: 150px;
+          height: 150px;
+          background: transparent;
+          border-radius: 50%;
+          box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.55);
+          border: 1px solid #333;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          margin: 0 auto;
+        }
+
+        .loader::before {
+          content: '';
+          position: absolute;
+          inset: 20px;
+          background: transparent;
+          border: 1px dashed #444;
+          border-radius: 50%;
+          box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+            inset 5px 5px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .loader::after {
+          content: '';
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 1px dashed #444;
+          box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+            inset 5px 5px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .loader span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 50%;
+          height: 100%;
+          background: transparent;
+          transform-origin: top left;
+          animation: radar81 2s linear infinite;
+          border-top: 1px dashed #fff;
+        }
+
+        .loader span::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: seagreen;
+          transform-origin: top left;
+          transform: rotate(-55deg);
+          filter: blur(30px) drop-shadow(20px 20px 20px seagreen);
+        }
+
+        @keyframes radar81 {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        /* Terminal Window CSS */
+        .terminal {
+          width: 500px;
+          background-color: #000;
+          color: #0f0;
+          font-family: "Courier New", Courier, monospace;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+          margin: 20px auto;
+        }
+
+        .terminal-header {
+          background-color: #333;
+          padding: 5px;
+          display: flex;
+          align-items: center;
+          color: #fff;
+        }
+
+        .buttons {
+          display: flex;
+          margin-right: 15px;
+        }
+
+        .buttons span {
+          height: 15px;
+          width: 15px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 5px;
+        }
+
+        .close {
+          background-color: #ff605c;
+        }
+        .minimize {
+          background-color: #ffbd44;
+        }
+        .maximize {
+          background-color: #00ca4e;
+        }
+
+        .title {
+          flex-grow: 1;
+          text-align: center;
+        }
+
+        .terminal-body {
+          padding: 10px;
+        }
+
+        .terminal-loader {
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .loader-text {
+          margin-right: 5px;
+        }
+
+        .dot {
+          opacity: 0;
+          animation: dotFadeInOut 1.5s infinite;
+        }
+
+        @keyframes dotFadeInOut {
+          0%,
+          100% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+
+        #dot1 {
+          animation-delay: 0.5s;
+        }
+
+        #dot2 {
+          animation-delay: 0.6s;
+        }
+
+        #dot3 {
+          animation-delay: 0.7s;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="buttons">
+                <span class="close"></span>
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+            </div>
+            <div class="title">Baccarat Pro 2024</div>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-loader">
+                <span class="loader-text">กำลังทำงาน</span>
+                <span id="dot1" class="dot">.</span>
+                <span id="dot2" class="dot">.</span>
+                <span id="dot3" class="dot">.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-section">
+        <div class="loader">
+            <span></span>
+        </div>
+        <div id="scoreDisplay">
+            <!-- สกอร์ 4 ตัวจะแสดงที่นี่ -->
+        </div>
+        <div class="timestamp" id="timestamp">
+            <!-- เวลาจะแสดงที่นี่ -->
+        </div>
+        <div class="button-container">
+            <button class="button" onclick="generateScore()">CALCULATE</button>
+        </div>
+    </div>
+
+    <div class="algorithm-section">
+        <div class="status-box">
+            <div class="left-icons">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+            </div>
+            <div class="title">status</div>
+        </div>
+    </div>
+
+    <div class="prediction" id="predictionLog">
+        <!-- รายงานผลการสุ่มจะแสดงที่นี่ -->
+    </div>
+
+    <script>
+        let attemptCount = 0; // ตัวนับจำนวนครั้งที่ทำการสุ่ม
+
+        function generateScore() {
+            attemptCount++; // เพิ่มจำนวนครั้งที่ทำการสุ่มทุกครั้งที่เรียกฟังก์ชัน
+            const choices = ['P', 'B'];
+            let score = '';
+
+            // สุ่มสกอร์ 4 ตัว
+            for (let i = 0; i < 4; i++) {
+                score += choices[Math.floor(Math.random() * choices.length)];
+            }
+
+            // แสดงสกอร์ 4 ตัวในรูปแบบวงกลม
+            let scoreHTML = '';
+            for (let i = 0; i < score.length; i++) {
+                let circleClass = score[i] === 'P' ? 'P' : 'B';
+                scoreHTML += `<div class="circle ${circleClass}">${score[i]}</div>`;
+            }
+            document.getElementById('scoreDisplay').innerHTML = scoreHTML;
+
+            // แสดง timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString();
+            document.getElementById('timestamp').innerText = `Timestamp: ${timestamp}`;
+
+            // บันทึกผลในรายงานด้านล่าง พร้อมแสดงครั้งที่ทำการสุ่ม
+            const log = document.getElementById('predictionLog');
+            const newLogEntry = `
+                <div class="log-entry">
+                    <div class="result-text">เลือกแทง 4 ครั้งที่ ${attemptCount}: ${score}</div>
+                    <div class="status correct" onclick="toggleStatus(this)">ถูก</div>
+                </div>
+            `;
+            log.innerHTML += newLogEntry;
+        }
+
+        function toggleStatus(element) {
+            if (element.classList.contains('correct')) {
+                element.classList.remove('correct');
+                element.classList.add('wrong');
+                element.textContent = 'ผิด';
+            } else {
+                element.classList.remove('wrong');
+                element.classList.add('correct');
+                element.textContent = 'ถูก';
+            }
+        }
+    </script>
+
+</body>
+</html>
