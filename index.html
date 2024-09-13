@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baccarat Killer Algorithm</title>
     <style>
+        /* สไตล์ CSS ของคุณทั้งหมดยังคงเดิม */
         body {
             font-family: Arial, sans-serif;
             background-color: #1c1c1c;
@@ -353,6 +354,17 @@
         }
 
     </style>
+
+    <!-- เพิ่มส่วนนี้ใน <head> เพื่อเปลี่ยนเส้นทางไป login.html ถ้ายังไม่ได้ล็อกอิน -->
+    <script>
+        window.onload = function() {
+            if (sessionStorage.getItem('loggedIn') !== 'true') {
+                // ถ้ายังไม่ได้ล็อกอิน ให้เปลี่ยนเส้นทางไปที่หน้า login.html
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+
 </head>
 <body>
 
@@ -386,7 +398,7 @@
             <!-- เวลาจะแสดงที่นี่ -->
         </div>
         <div class="button-container">
-            <button class="button" onclick="generateScore()">CALCULATE</button>
+            <button class="button" onclick="generateScore()">สุ่มสกอร์</button>
         </div>
     </div>
 
