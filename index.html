@@ -451,7 +451,7 @@
                     <div class="status correct" onclick="toggleStatus(this)">ถูก</div>
                 </div>
             `;
-            log.innerHTML += newLogEntry;
+            log.insertAdjacentHTML('afterbegin', newLogEntry); // เพิ่มรายการที่ด้านบนสุด
         }
 
         function toggleStatus(element) {
