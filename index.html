@@ -353,6 +353,18 @@
           animation-delay: 0.7s;
         }
 
+        /* เพิ่มสไตล์สำหรับปุ่มล็อกเอาท์ */
+        .logout-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #e81cff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+        }
     </style>
 
     <!-- เพิ่มส่วนนี้ใน <head> เพื่อเปลี่ยนเส้นทางไป login.html ถ้ายังไม่ได้ล็อกอิน -->
@@ -362,6 +374,12 @@
                 // ถ้ายังไม่ได้ล็อกอิน ให้เปลี่ยนเส้นทางไปที่หน้า login.html
                 window.location.href = 'login.html';
             }
+        }
+
+        // ฟังก์ชันสำหรับล็อกเอาท์
+        function logout() {
+            sessionStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
         }
     </script>
 
@@ -417,6 +435,9 @@
         <!-- รายงานผลการสุ่มจะแสดงที่นี่ -->
     </div>
 
+    <!-- เพิ่มปุ่มล็อกเอาท์ -->
+    <button class="logout-button" onclick="logout()">ออกจากระบบ</button>
+
     <script>
         let attemptCount = 0; // ตัวนับจำนวนครั้งที่ทำการสุ่ม
 
@@ -469,3 +490,4 @@
 
 </body>
 </html>
+
