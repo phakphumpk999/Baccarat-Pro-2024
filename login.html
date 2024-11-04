@@ -7,24 +7,39 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #1a1a1a;
+            flex-direction: column;
+        }
+
+        #logo-container {
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1em;
+        }
+
+        #logo {
+            width: 100%;
+            border-radius: 15px;
         }
 
         .form {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 10px;
-            padding-left: 2em;
-            padding-right: 2em;
-            padding-bottom: 0.4em;
+            padding: 2em;
+            width: 100%;
+            max-width: 350px;
             background-color: #171717;
             border-radius: 25px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
             transition: .4s ease-in-out;
         }
 
@@ -35,29 +50,22 @@
 
         #heading {
             text-align: center;
-            margin: 2em;
             color: rgb(255, 255, 255);
             font-size: 1.2em;
+            margin-bottom: 1em;
         }
 
         .field {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5em;
+            width: 100%;
             border-radius: 25px;
             padding: 0.6em;
             border: none;
-            outline: none;
+            background-color: #1a1a1a;
             color: white;
-            background-color: #171717;
             box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-        }
-
-        .input-icon {
-            height: 1.3em;
-            width: 1.3em;
-            fill: white;
         }
 
         .input-field {
@@ -68,24 +76,29 @@
             color: #d3d3d3;
         }
 
-        .form .btn {
+        .btn-group {
+            width: 100%;
             display: flex;
-            justify-content: center;
-            flex-direction: row;
-            margin-top: 2.5em;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 1.5em;
+        }
+
+        .button1,
+        .signup-button {
+            padding: 0.7em;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .4s ease-in-out;
+            text-align: center;
         }
 
         .button1 {
-            padding: 0.5em;
-            padding-left: 1.1em;
-            padding-right: 1.1em;
-            border-radius: 5px;
-            margin-right: 0.5em;
-            border: none;
-            outline: none;
-            transition: .4s ease-in-out;
             background-color: #252525;
-            color: white;
         }
 
         .button1:hover {
@@ -93,12 +106,24 @@
             color: white;
         }
 
+        .signup-button {
+            background-color: #3b5998;
+        }
+
+        .signup-button:hover {
+            background-color: #2d4373;
+        }
     </style>
 </head>
 <body>
 
+    <div id="logo-container">
+        <img id="logo" src="https://img5.pic.in.th/file/secure-sv1/1a27877d8f89bb9d4.jpeg" alt="โลโก้"> 
+    </div>
+
     <div class="form">
         <h2 id="heading">เข้าสู่ระบบ</h2>
+        
         <div class="field">
             <input type="email" id="email" class="input-field" placeholder="อีเมล" required>
         </div>
@@ -106,15 +131,15 @@
             <input type="password" id="password" class="input-field" placeholder="รหัสผ่าน" required>
         </div>
 
-        <div class="btn">
+        <div class="btn-group">
             <button class="button1" type="submit" onclick="login(event)">ลงชื่อเข้าใช้</button>
+            <a href="https://t.me/Aibaccaratt" target="_blank" class="signup-button">สร้างบัญชี</a>
         </div>
     </div>
 
     <script>
-        // เก็บข้อมูลอีเมลและรหัสผ่านใน array
+        // ข้อมูลผู้ใช้และรหัสผ่าน
         const accounts = [
-            { email: "pakpoompk9992@gmail.com", password: "Pk0816998761" },
             { email: "user1@example.com", password: "U1$g8#mN!Q" },
             { email: "user2@example.com", password: "R9*lK&d2@H" },
             { email: "user3@example.com", password: "N5^pX%y1#J" },
@@ -149,100 +174,25 @@
             { email: "user32@example.com", password: "M8^vT&o5*G" },
             { email: "user33@example.com", password: "P2#wK!d9#Q" },
             { email: "user34@example.com", password: "Z7&xC^p4@H" },
-            { email: "user35@example.com", password: "J5*qL#t8%R" },
-            { email: "user36@example.com", password: "E3!rF^k1&O" },
-            { email: "user37@example.com", password: "R9@vM*w7#H" },
-            { email: "user38@example.com", password: "L2%xP^n5*Q" },
-            { email: "user39@example.com", password: "D4!tK&y9@O" },
-            { email: "user40@example.com", password: "T8^zR#q1$G" },
-            { email: "user41@example.com", password: "S1#wV!p6&L" },
-            { email: "user42@example.com", password: "N5&yB@r3*Q" },
-            { email: "user43@example.com", password: "F9^mJ#k2!H" },
-            { email: "user44@example.com", password: "C3@xD%p8&R" },
-            { email: "user45@example.com", password: "Y7!nL*w4#O" },
-            { email: "user46@example.com", password: "M2&rT^q9*P" },
-            { email: "user47@example.com", password: "X5#wK@o1!Q" },
-            { email: "user48@example.com", password: "R9^pN#y6&L" },
-            { email: "user49@example.com", password: "W1!vC*o3%H" },
-            { email: "user50@example.com", password: "J4&xZ^k7*O" },
-            { email: "user51@example.com", password: "G2#rF@p9^T" },
-            { email: "user52@example.com", password: "P8*nV!m1&Q" },
-            { email: "user53@example.com", password: "L5%yJ^d4#R" },
-            { email: "user54@example.com", password: "S9@qK&w2*H" },
-            { email: "user55@example.com", password: "Z1!xR^t8&O" },
-            { email: "user56@example.com", password: "D3&wM@p5*Q" },
-            { email: "user57@example.com", password: "K7#nT^k2!P" },
-            { email: "user58@example.com", password: "V4%yL@r9#H" },
-            { email: "user59@example.com", password: "X8&rC*o1^G" },
-            { email: "user60@example.com", password: "J2^pN#v6@Q" },
-            { email: "user61@example.com", password: "W5!xK*w3%T" },
-            { email: "user62@example.com", password: "Q9@zR&d8^L" },
-            { email: "user63@example.com", password: "M1#yB@r4*H" },
-            { email: "user64@example.com", password: "P7!nV^q2&O" },
-            { email: "user65@example.com", password: "L3&wT*m5#Q" },
-            { email: "user66@example.com", password: "S9%xJ^p1!G" },
-            { email: "user67@example.com", password: "Z4#yK@o7*R" },
-            { email: "user68@example.com", password: "D2!rC*w6^H" },
-            { email: "user69@example.com", password: "K8&vN#t3*O" },
-            { email: "user70@example.com", password: "V5@pM^k1%Q" },
-            { email: "user71@example.com", password: "X9!yR*w4#T" },
-            { email: "user72@example.com", password: "J3^qL&d8@H" },
-            { email: "user73@example.com", password: "G1@zF*o7^P" },
-            { email: "user74@example.com", password: "P6#wK!y2&R" },
-            { email: "user75@example.com", password: "L9^nT@m5#Q" },
-            { email: "user76@example.com", password: "S1&vJ@p4*H" },
-            { email: "user77@example.com", password: "Z7!xR^d2%O" },
-            { email: "user78@example.com", password: "D3#yB*w9@G" },
-            { email: "user79@example.com", password: "K5^pM#k6*Q" },
-            { email: "user80@example.com", password: "W8&rC@t1!H" },
-            { email: "user81@example.com", password: "Q2%xN^o4*L" },
-            { email: "user82@example.com", password: "M9!yT#w7&R" },
-            { email: "user83@example.com", password: "P1^rK*d3@O" },
-            { email: "user84@example.com", password: "L4&wV@q8*G" },
-            { email: "user85@example.com", password: "S7%xJ#p2!Q" },
-            { email: "user86@example.com", password: "Z3!nR^m5*H" },
-            { email: "user87@example.com", password: "D9@vC&w1#O" },
-            { email: "user88@example.com", password: "K2#yB^o6!Q" },
-            { email: "user89@example.com", password: "X8!xM*p7&L" },
-            { email: "user90@example.com", password: "J1@rT^k4#H" },
-            { email: "user91@example.com", password: "G5^qN#w3*O" },
-            { email: "user92@example.com", password: "P9&yV!d2%Q" },
-            { email: "user93@example.com", password: "L4*xK@m8&R" },
-            { email: "user94@example.com", password: "S1!nC@p5#T" },
-            { email: "user95@example.com", password: "Z7#vR^t9*Q" },
-            { email: "user96@example.com", password: "D3@yL!o1&H" },
-            { email: "user97@example.com", password: "K5&wN^m4*O" },
-            { email: "user98@example.com", password: "W9!pT#k2%R" },
-            { email: "user99@example.com", password: "Q8@xJ&y7^G" }
+            { email: "user35@example.com", password: "J5*qL#t8%R" }
+            // เพิ่มข้อมูลผู้ใช้อื่นๆ ที่ต้องการ
         ];
 
-        // ฟังก์ชันตรวจสอบการล็อกอิน
         function login(event) {
-            event.preventDefault();  // หยุดการรีเฟรชหน้าเว็บเมื่อกด submit
-            console.log("ฟังก์ชัน login ถูกเรียกใช้งาน");
-
+            event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
-            console.log('อีเมล:', email);
-            console.log('รหัสผ่าน:', password);
 
             const isValid = accounts.some(account => account.email === email && account.password === password);
 
             if (isValid) {
-                console.log('เข้าสู่ระบบสำเร็จ');
                 sessionStorage.setItem('loggedIn', 'true');
                 window.location.href = 'index.html';
             } else {
-                console.log('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
                 alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
             }
         }
     </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
